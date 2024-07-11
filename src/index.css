@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .auth-bg-left {
+    background-image: url("./assets/bg-login.svg"),
+      url("./assets/bg-login-right.svg");
+    background-image: ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  /* .auth-bg-right {
+    @apply bg-[url('')] bg-no-repeat bg-cover bg-center;
+    @apply bg-[url('')] bg-no-repeat bg-cover bg-center;
+  } */
+}
