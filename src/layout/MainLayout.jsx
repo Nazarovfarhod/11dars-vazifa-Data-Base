@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 function MainLayout() {
   return (
     <div>
-      <header className="">
+      <header>
         <Navbar />
       </header>
       <main className="container px-10 mx-auto">

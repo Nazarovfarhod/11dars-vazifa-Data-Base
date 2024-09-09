@@ -1,10 +1,22 @@
 import { Link } from "react-router-dom";
 import fnlogo from "../assets/lite-mode-fn.png";
 
+//firebase
+
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
+
 //context
 import { useGlobalContext } from "../hooks/useGlobalContext";
+import toast from "react-hot-toast";
 function Navbar() {
   const { user } = useGlobalContext();
+
+  const signOutProfile = async () => {
+    await signOut(auth);
+    toast.success("See You Soon !");
+  };
+
   console.log(user);
   return (
     <div className=" mx-auto my-10 px-3 ">
@@ -85,6 +97,7 @@ function Navbar() {
             </li>
             <li>
               <Link
+                onClick={signOutProfile}
                 className="bg-red-400 text-white py-1 font-serif text-xl font-semibold"
                 to="/login"
               >

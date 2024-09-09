@@ -5,6 +5,9 @@ import FormInput from "../components/FormInput";
 //react import
 import { useEffect } from "react";
 
+//custom hooks
+import { useRegister } from "../hooks/useRegister";
+
 //action
 export const action = async ({ request }) => {
   let formData = await request.formData();
@@ -16,6 +19,7 @@ export const action = async ({ request }) => {
 
 function Login() {
   const userData = useActionData();
+  const { isPending, registerWithGoogle } = useRegister();
 
   useEffect(() => {
     if (userData) {
@@ -62,9 +66,20 @@ function Login() {
             <h3 className="text-center text-xl text-green-800 font-semibold font-serif mb-2">
               Or Sign in with
             </h3>
-            <div className="btn mb-5 bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
-              <button type="button">Google</button>
-            </div>
+
+            {isPending && (
+              <div className="btn mb-5 bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
+                <button type="button">Loading...</button>
+              </div>
+            )}
+            {!isPending && (
+              <div
+                onClick={registerWithGoogle}
+                className="btn mb-5 bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold"
+              >
+                <button type="button">Google</button>
+              </div>
+            )}
             <div className="flex items-center justify-between px-5">
               <h4>Don't have an account ?</h4>
               <Link to="/register" className="text-primary">

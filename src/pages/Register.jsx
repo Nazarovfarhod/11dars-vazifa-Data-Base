@@ -9,11 +9,12 @@ export const action = async ({ request }) => {
   let formData = await request.formData();
   let firstName = formData.get("firstName");
   let lastName = formData.get("lastName");
+  let photoURL = formData.get("photoURL");
   let email = formData.get("email");
   let password = formData.get("password");
   let configPassword = formData.get("configPassword");
 
-  return { firstName, lastName, email, password, configPassword };
+  return { firstName, lastName, photoURL, email, password, configPassword };
 };
 
 //custom hooks
@@ -22,11 +23,18 @@ import { useRegister } from "../hooks/useRegister";
 
 function Register() {
   const userData = useActionData();
-  const { registerWithGoogle, isPending } = useRegister();
+  const { registerWithGoogle, isPending, registerEmailAndPassword } =
+    useRegister();
 
   useEffect(() => {
     if (userData) {
-      console.log(userData);
+      registerEmailAndPassword(
+        userData.email,
+        userData.password,
+        userData.displayName,
+        userData.photoURL,
+        userData.configPassword
+      );
     }
   }, [userData]);
 
@@ -40,7 +48,7 @@ function Register() {
           <div className="flex gap-3 items-center">
             <FormInput
               label="First Name"
-              type="email"
+              type="text"
               name="firstName"
               placeholder="Email"
             />
@@ -55,6 +63,12 @@ function Register() {
             label="Email"
             type="email"
             name="email"
+            placeholder="Email"
+          />
+          <FormInput
+            label="Photo URL"
+            type="url"
+            name="photoURL"
             placeholder="Email"
           />
           <FormInput
@@ -83,9 +97,16 @@ function Register() {
             </label>
           </div>
           <div>
-            <button className="btn bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
-              Sign up
-            </button>
+            {isPending && (
+              <button className="btn bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
+                Loading...
+              </button>
+            )}
+            {!isPending && (
+              <button  className="btn bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
+                Sign up
+              </button>
+            )}
           </div>
           {isPending && (
             <div className="btn mb-5 bg-[#33b574] rounded-[25px] btn-block text-xl tracking-[2px] font-bold">
